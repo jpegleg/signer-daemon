@@ -1,9 +1,13 @@
 import rsa
+import os
 import base64
+import redis
+import binascii
 from base64 import b64encode, b64decode
 from celery import Celery
 from Crypto.PublicKey import RSA
-from hashlib import sha512
+from Crypto.Hash import SHA256
+from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
 
 app = Celery(
     'celeryRsa',
@@ -23,21 +27,29 @@ app.setup_security()
 
 @app.task
 def rsatn(message_in):
+    r = redis.StrictRedis(host='localhost', port=6379, db=0)
     f = open('rsa.pem','r')
     keyPair = RSA.import_key(f.read())
-    print(f"Public key:  (n={hex(keyPair.n)}, e={hex(keyPair.e)})")
-    hash = int.from_bytes(sha512(message_in).digest(), byteorder='big')
-    signature = pow(hash, keyPair.d, keyPair.n)
-    print("Signature:", hex(signature))
-    return (message_in, signature)
+    hash = SHA256.new(message_in)
+    signer = PKCS115_SigScheme(keyPair)
+    signature = signer.sign(hash)
+    r.mset({binascii.hexlify(signature): message_in})
+    print("Signature:", binascii.hexlify(signature))
+    return(message_in, binascii.hexlify(signature))
 def rsavf(message_in):
+    r = redis.StrictRedis(host='localhost', port=6379, db=0)
     f = open('rsa.pem','r')
     keyPair = RSA.import_key(f.read())
-    print(f"Public key:  (n={hex(keyPair.n)}, e={hex(keyPair.e)})")
-    hash = int.from_bytes(sha512(message_in).digest(), byteorder='big')
-    fromsignature = pow(hash, keyPair.e, keyPair.n)
-    print("Signature valid:", hash == fromsignature)
-    return (hash == fromsignature)
+    message = r.get(message_in)
+    hash = SHA256.new(message)
+    signer = PKCS115_SigScheme(keyPair)
+    signature = binascii.unhexlify(message_in)
+    print("Verification of string:",  message)
+    try:
+      velidate = signer.verify(hash, signature)
+      return('Valid signature.')
+    except Exception as error:
+      return('No match for signature.')
 
 if __name__ == '__main__':
     app.start()
