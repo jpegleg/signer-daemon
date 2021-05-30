@@ -1,8 +1,6 @@
-import socket
 import rsa
-import sys
 import base64
-from base64 import b64encode, b64decode
+
 from celery import Celery
 
 app = Celery(
@@ -21,10 +19,9 @@ app.conf.update(
 )
 app.setup_security()
 
-
 @app.task
 def rsatn(self, token_crypto):
-    tag = bytes("RSA_SIGNED->",encoding="utf8")
+    tag = bytes(" RSA_SIGNED --> ",encoding="utf8")
     with open('rsa.pem','r') as f:
         privkey = rsa.PrivateKey.load_pkcs1(f.read().encode())
     token_message = token_crypto
