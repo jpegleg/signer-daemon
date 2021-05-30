@@ -2,6 +2,8 @@ import rsa
 import base64
 from base64 import b64encode, b64decode
 from celery import Celery
+from Crypto.PublicKey import RSA
+from hashlib import sha512
 
 app = Celery(
     'celeryRsa',
@@ -19,18 +21,23 @@ app.conf.update(
 )
 app.setup_security()
 
-
 @app.task
-def rsatn(self, token_crypto):
-    with open('rsa.pem','r') as f:
-        privkey = rsa.PrivateKey.load_pkcs1(f.read().encode())
-    token_message = token_crypto
-    token_crypto = bytes(token_crypto, encoding='utf8')
-    signature = rsa.sign(token_message.encode(), privkey, 'SHA-256')
-    print("token message encode = ", token_message.encode())
-    signature = base64.encodebytes(signature)
-    print (signature)
-    return (token_crypto, signature)
+def rsatn(message_in):
+    f = open('rsa.pem','r')
+    keyPair = RSA.import_key(f.read())
+    print(f"Public key:  (n={hex(keyPair.n)}, e={hex(keyPair.e)})")
+    hash = int.from_bytes(sha512(message_in).digest(), byteorder='big')
+    signature = pow(hash, keyPair.d, keyPair.n)
+    print("Signature:", hex(signature))
+    return (message_in, signature)
+def rsavf(message_in):
+    f = open('rsa.pem','r')
+    keyPair = RSA.import_key(f.read())
+    print(f"Public key:  (n={hex(keyPair.n)}, e={hex(keyPair.e)})")
+    hash = int.from_bytes(sha512(message_in).digest(), byteorder='big')
+    fromsignature = pow(hash, keyPair.e, keyPair.n)
+    print("Signature valid:", hash == fromsignature)
+    return (hash == fromsignature)
 
 if __name__ == '__main__':
     app.start()
