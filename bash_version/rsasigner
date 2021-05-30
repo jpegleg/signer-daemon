@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+listener () {
+  nc -l localhost "$1" || echo "$(date +%Y%m%d%H%M%S) - Listener drop, restarting..."
+}
+
+request () {
+  tmpid=tmpId__$(openssl rand -hex 16)
+  echo "$1" > "$tmpid"
+  time openssl rsautl -sign -in "$tmpid" -inkey rsa.key -out output.sign
+}
+
+daemonize () {
+  while true; do
+    echo "$(date +%Y%m%d%H%M%S%N) - New proc init."
+    returned="$(listener 50041)" && request "$returned" || echo "$(date +%Y%m%d%H%M%S) - Listener drop, restarting..."
+    echo "$(date +%Y%m%d%H%M%S%N) - Closing data in from receive netcat exit."
+    echo -n "$(cat ./output.sign | base64)" | redis-cli -x set latestSigner
+    XIID="$(sleep 0.1 && echo $(openssl rand -hex 32)-$(date +%Y%m%d%H%M%S%N))"
+    echo -n "$(cat ./output.sign | base64)" | redis-cli -x set "$XIID"
+    redis-cli expire "$XIID" 120 && echo "$(date +%Y%m%d%H%M%S%N) - proc XIID set in redis."
+  done
+}
+
+main () {
+  daemonize 2>&1 > shellery_rsa.log
+}
+
+main || exit 1
