@@ -22,11 +22,10 @@ app.setup_security()
 
 @app.task
 def rsatn(self, token_crypto):
-    tag = bytes("RSA",encoding="utf8")
     with open('rsa.pem','r') as f:
         privkey = rsa.PrivateKey.load_pkcs1(f.read().encode())
     token_message = token_crypto
-    token_crypto = bytes(token_crypto, encoding='utf8') + tag
+    token_crypto = bytes(token_crypto, encoding='utf8')
     signature = rsa.sign(token_message.encode(), privkey, 'SHA-256')
     print("token message encode = ", token_message.encode())
     signature = base64.encodebytes(signature)
