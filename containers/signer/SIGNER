@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+echo "$(date +%Y%m%d%H%M%S) -> -> -> Starting new runtime of an RSA signing service."
+
+pip install --upgrade pip
 systemctl restart haproxy || exit 1
 cat rsa.pem || exit 1
 python3 -m venv venv || exit 1
 source venv/bin/activate || exit 1
 pip install -r requirements.txt || exit 1
 
-python3 signing_server.py
+python3 signing_server.py || echo "$(date +%Y%m%d%H%M%S) <- <- <- service runtime down."
