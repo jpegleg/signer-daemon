@@ -49,6 +49,7 @@ def rsavf(message_in):
       velidate = signer.verify(hash, signature)
       return('Valid signature.')
     except Exception as error:
+      print('ERROR: ', error)
       return('No match for signature.')
 
 if __name__ == '__main__':
