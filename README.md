@@ -6,7 +6,7 @@ further expanded on or combined with other applications when used in the real wo
 I use HAProxy and many other tools along with these daemons
 
 
-Example single host or single container running the two socket servers and the celery daemon:
+Example of setting up a single host for both sign and verify servers:
 
 ```
 python3 -m venv venv
