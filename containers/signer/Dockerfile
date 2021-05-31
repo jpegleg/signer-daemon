@@ -5,7 +5,6 @@ LABEL description="RSA Signing Microservice"
 
 RUN apt-get update && apt-get install -y apt-transport-https aptitude && aptitude install -y python3 python3-venv pip openssl curl haproxy redis git
 RUN ln -sf /dev/stdout signer.log
-RUN git clone https://github.com/jpegleg/signer-daemon && cp signer-daemon/* .
 RUN mkdir files/ && openssl genrsa 4096 > files/celeryRsa.key
 
 # RUN curl https://somevault/pki/root_ca.pem -o files/ca.pem
