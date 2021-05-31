@@ -46,7 +46,7 @@ def rsavf(message_in):
     signature = binascii.unhexlify(message_in)
     print("Verification of string:",  message)
     try:
-      velidate = signer.verify(hash, signature)
+      validate = signer.verify(hash, signature)
       return('Valid signature.')
     except Exception as error:
       print('ERROR: ', error)
