@@ -27,7 +27,7 @@ app.setup_security()
 
 @app.task
 def rsatn(message_in):
-    r = redis.StrictRedis(host='localhost', port=6379, db=0)
+    r = redis.StrictRedis(host='somecloudservice.com', port=6379, db=0)
     f = open('rsa.pem','r')
     keyPair = RSA.import_key(f.read())
     hash = SHA256.new(message_in)
@@ -37,7 +37,7 @@ def rsatn(message_in):
     print("Signature:", binascii.hexlify(signature))
     return(message_in, binascii.hexlify(signature))
 def rsavf(message_in):
-    r = redis.StrictRedis(host='localhost', port=6379, db=0)
+    r = redis.StrictRedis(host='somecloudservice.com', port=6379, db=0)
     f = open('rsa.pem','r')
     keyPair = RSA.import_key(f.read())
     message = r.get(message_in)
