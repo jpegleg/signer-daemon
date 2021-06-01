@@ -5,7 +5,8 @@ The max message length is defaulted to 1024 bytes. Adjust it if needed, in many 
 
 What is included in this repo is a collection of concepts that would be 
 further expanded on or combined with other applications when used in the real world.
-I use HAProxy and many other tools along with these daemons
+I use these daemons on the loopback device and have other apps call them locally.
+I want to use it behind a TLS proxy and firewall etc.
 
 
 Example of setting up a single host for both sign and verify servers:
