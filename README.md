@@ -3,6 +3,10 @@ RSA signing daemon collection with redis backend.
 
 Potentially vulnerable to padding attacks, oracle attacks etc (PKCSv1.5 stuffs in here).
 
+This signing should not really be considered a security enhancement, but instead an example component.
+It might get use as some token authorization mechanism obfuscation, layered with real privacy measures like AES256.
+
+
 The max message length is defaulted to 1024 bytes. Adjust it if needed, in many implementations it may be safely increased.
 
 What is included in this repo is a collection of concepts that would be 
