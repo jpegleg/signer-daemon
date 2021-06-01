@@ -1,6 +1,8 @@
 # signer-daemon
 RSA signing daemon collection with redis backend.
 
+Potentially vulnerable to padding attacks, oracle attacks etc (PKCSv1.5 stuffs in here).
+
 The max message length is defaulted to 1024 bytes. Adjust it if needed, in many implementations it may be safely increased.
 
 What is included in this repo is a collection of concepts that would be 
