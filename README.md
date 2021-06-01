@@ -1,9 +1,8 @@
 # signer-daemon
 Signing daemon collection with redis backend.
 
-Some of the code in here is potentially vulnerable to padding attacks, oracle attacks etc (PKCSv1.5 stuffs in here).
+OAEP PSS implemented to mitigate oracle/padding attacks on RSA.
 
-This signing should not really be considered a security enhancement, it does not provide privacy or good encryption, but instead an example Identity component.
 If the data is to be secret/private, then is should be encrypted with (AES256) before being signed by this identity daemon.
 
 
