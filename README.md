@@ -3,7 +3,7 @@ RSA signing daemon collection with redis backend.
 
 Potentially vulnerable to padding attacks, oracle attacks etc (PKCSv1.5 stuffs in here).
 
-This signing should not really be considered a security enhancement, but instead an example component.
+This signing should not really be considered a security enhancement, but instead an example Identity component.
 It might get use as some token authorization mechanism obfuscation, layered with real privacy measures like AES256.
 
 
