@@ -7,7 +7,8 @@ from base64 import b64encode, b64decode
 from celery import Celery
 from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA256
-from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
+from Crypto import Random
+from Crypto.Signature import PKCS1_PSS
 
 app = Celery(
     'celeryRsa',
@@ -31,7 +32,7 @@ def rsatn(message_in):
     f = open('rsa.pem','r')
     keyPair = RSA.import_key(f.read())
     hash = SHA256.new(message_in)
-    signer = PKCS115_SigScheme(keyPair)
+    signer = PKCS1_PSS.new(keyPair)
     signature = signer.sign(hash)
     r.mset({binascii.hexlify(signature): message_in})
     print("Signature:", binascii.hexlify(signature))
@@ -42,11 +43,11 @@ def rsavf(message_in):
     keyPair = RSA.import_key(f.read())
     message = r.get(message_in)
     hash = SHA256.new(message)
-    signer = PKCS115_SigScheme(keyPair)
+    signer = PKCS1_PSS.new(keyPair)
     signature = binascii.unhexlify(message_in)
     print("Verification of string:",  message)
     try:
-      validate = signer.verify(hash, signature)
+      velidate = signer.verify(hash, signature)
       return('Valid signature.')
     except Exception as error:
       print('ERROR: ', error)
