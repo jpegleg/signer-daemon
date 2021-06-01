@@ -1,5 +1,5 @@
 # signer-daemon
-RSA signing daemon collection with redis backend.
+Signing daemon collection with redis backend.
 
 Potentially vulnerable to padding attacks, oracle attacks etc (PKCSv1.5 stuffs in here).
 
