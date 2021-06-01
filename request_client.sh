@@ -16,7 +16,7 @@ echo
 echo "The signer server will run in kubernetes and docker, in a VM, or on baremetal. Adjust the celery settings and the redis settings as needed, it will with with TLS etc."
 echo
 echo "Here is another example:"
-echo "bash request_client.sh verify https://mycloudservice.io/verify/rsa/token/  
+echo "bash request_client.sh verify https://mycloudservice.io/verify/rsa/token/  "
 echo
 exit 1;
 esac
