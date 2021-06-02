@@ -6,7 +6,7 @@ OAEP PSS implemented to mitigate oracle/padding attacks on RSA.
 If the data is to be secret/private, then is should be encrypted with (AES256) before being signed by this identity daemon.
 
 
-The max message length is defaulted to 1024 bytes. Adjust it if needed, in many implementations it may be safely increased.
+The max message length is defaulted to 2048 bytes. Adjust it if needed, in many implementations it may be safely increased.
 
 What is included in this repo is a collection of concepts that would be 
 further expanded on or combined with other applications when used in the real world.
