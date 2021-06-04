@@ -18,7 +18,7 @@ app = Celery(
 app.conf.update(
     security_key='files/celeryRsa.key',
     security_certificate='files/celeryRsa.pem',
-    security_cert_store='files/*.pem',
+    security_cert_store='files/caTrust.pem',
     task_serializer='auth',
     event_serializer='auth',
     accept_content=['auth'],
