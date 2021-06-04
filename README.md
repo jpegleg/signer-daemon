@@ -17,15 +17,15 @@ I want to use it behind a TLS proxy and firewall etc.
 Example of setting up a single host for both sign and verify servers:
 
 ```
-# We'll put celery the celery daemon's rsa files in files/
+# We'll put the celery daemon's rsa files in files/
 mkdir files/
 # Crate an RSA key, get it signed, put the certificate in
 # files/celeryRsa.pem
 # and the rsa private key in
 # files/celeryRsa.key
-# and the ca certs can go in *.pem files
-# files/ca.pem
-# Don't have any extra key .pem files in files otherwise the daemon may fail to load.
+# and the ca certs can be concatenated into
+# files/caTrust.pem
+# 
 # create an rsa signing key or use an existing one
 openssl genrsa 4096 > rsa.pem
 python3 -m venv venv
