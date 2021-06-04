@@ -45,10 +45,10 @@ def rsavf(message_in):
     hash = SHA256.new(message)
     signer = PKCS1_PSS.new(keyPair)
     signature = binascii.unhexlify(message_in)
-    print("Verification of string:",  message)
+    print("Verification of data:",  message)
     try:
-      velidate = signer.verify(hash, signature)
-      return('Valid signature.')
+      validate = signer.verify(hash, signature)
+      return('Valid signature.', validate)
     except Exception as error:
       print('ERROR: ', error)
       return('No match for signature.')
