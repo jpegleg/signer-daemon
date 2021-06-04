@@ -56,4 +56,4 @@ user    0m0.022s
 sys     0m0.009s
 ```
 
-TODO: make a desktop GUI client, exapand error handling, include example docker files, add curves 384 and 512 daemons, haproxy template...
+TODO: make a desktop GUI client, exapand error handling, include example docker files, add curves 384 and 512 daemons, front-end client for HTTPS transport.
