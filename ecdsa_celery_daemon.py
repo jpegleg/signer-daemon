@@ -38,11 +38,7 @@ def dsatn(message_in):
     signature = signer.sign(hash)
     r.mset({binascii.hexlify(signature): message_in})
     print("Signature:", binascii.hexlify(signature))
-    try:
-      return(message_in, binascii.hexlify(signature))
-    except Exception as error:
-      print('ERROR: ', error)
-      return('No match for signature.')
+    return(message_in, binascii.hexlify(signature))
 def dsavf(message_in):
     r = redis.StrictRedis(host='localhost', port=6379, db=0)
     f = open('secp384r1.pub','r')
