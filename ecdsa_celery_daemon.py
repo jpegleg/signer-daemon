@@ -54,7 +54,7 @@ def dsavf(message_in):
     print("Verification of data:", message)
     try:
       validate = signer.verify(hash, signature)
-      return('Valid Signature.')
+      return('Valid entry found.')
     except Exception as error:
       print('ERROR: ', error)
       return('No match for signature.')
