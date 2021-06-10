@@ -1,5 +1,4 @@
 import socketserver
-import rsa
 import socket
 import celery
 
