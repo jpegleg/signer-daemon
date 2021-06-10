@@ -1,13 +1,16 @@
 # signer-daemon collection
 Signing daemon collection with redis backend.
 
-OAEP PSS implemented to mitigate oracle/padding attacks on RSA.
+For the RSA daemons, OAEP PSS is implemented to mitigate oracle/padding attacks on RSA (Bleichenbacher).
 
 If the data is to be secret/private, then is should be encrypted with (AES256) before being signed by this identity daemon.
 
 Important design note:
 Both ECDSA and RSA verify daemons will not return a valid result if the signature is not stored appropriately it the redis instance.
-This allows for expiration and granular controls over which keys are valid via redis.
+This allows for expiration and granular controls over which keys are valid via redis. 
+
+So if you delete or expire the signature in redis, you expire that signature in runtime. If the signature data is loaded back into redis,
+then it will become valid again.
 
 The max message length is defaulted to 2048 bytes. Adjust it if needed, in many implementations it may be safely increased.
 
