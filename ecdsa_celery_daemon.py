@@ -46,8 +46,7 @@ def dsatn(message_in):
 def dsavf(message_in):
     r = redis.StrictRedis(host='localhost', port=6379, db=0)
     f = open('secp384r1.pub','r')
-    public_key = ECC.import_key(f.read())
-    keyPair = public_key
+    keyPair = ECC.import_key(f.read())
     message = r.get(message_in)
     hash = SHA384.new(message)
     signer = DSS.new(keyPair, 'fips-186-3')
