@@ -46,7 +46,7 @@ def rsavf(message_in):
     print("Verification of data:",  message)
     try:
       validate = signer.verify(hash, signature)
-      return('Validation result:', validate)
+      return('Validated as:', validate)
     except Exception as error:
       print('ERROR: ', error)
       return('No match for signature.')
