@@ -1,4 +1,3 @@
-import rsa
 import base64
 import redis
 import binascii
@@ -47,7 +46,7 @@ def rsavf(message_in):
     print("Verification of data:",  message)
     try:
       validate = signer.verify(hash, signature)
-      return('Valid signature.')
+      return('Validation result:', validate)
     except Exception as error:
       print('ERROR: ', error)
       return('No match for signature.')
