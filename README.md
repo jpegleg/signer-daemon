@@ -1,13 +1,13 @@
-# signer-daemon
+# signer-daemon collection
 Signing daemon collection with redis backend.
 
 OAEP PSS implemented to mitigate oracle/padding attacks on RSA.
 
 If the data is to be secret/private, then is should be encrypted with (AES256) before being signed by this identity daemon.
 
-Important note about the behavior of the rsa daemons and the ecdsa daemons currently:
-The RSA verify server will always return a "valid" response if the signature was created by the private RSA key, regardless of whether it is in redis or not.
-THe ECDSA verify server will always return a "valid" response if the signature is inside the redis instance and the verify with the public key returns no errors.
+Important design note:
+Both ECDSA and RSA verify daemons will not return a valid result if the signature is not stored appropriately it the redis instance.
+This allows for expiration and granular controls over which keys are valid via redis.
 
 The max message length is defaulted to 2048 bytes. Adjust it if needed, in many implementations it may be safely increased.
 
