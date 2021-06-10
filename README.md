@@ -59,4 +59,26 @@ user    0m0.022s
 sys     0m0.009s
 ```
 
+
+Here is an example of using CLI directly with netcat. In this example, we'll use the ECDSA daemons:
+
+```
+$ time echo mytoken | nc localhost 9848
+(b'mytoken', b'ad0a729c7270620be3ef379ed48da9ed7ed56762af6e24e0983a0a5882ab0d5e6bd25dbe900b1fcfc5be19c467eeedc76e434595c852cd642c3fbd8b20ee2a11deb2378ed40714d35b16fcb1322aa2f0f435192f2831a250ee4674ea739d6065')
+real    0m0.029s
+user    0m0.016s
+sys     0m0.005s
+$ time echo ad0a729c7270620be3ef379ed48da9ed7ed56762af6e24e0983a0a5882ab0d5e6bd25dbe900b1fcfc5be19c467eeedc76e434595c852cd642c3fbd8b20ee2a11deb2378ed40714d35b16fcb1322aa2f0f435192f2831a250ee4674ea739d6065 | nc localhost 9849
+Valid entry found.
+real    0m0.034s
+user    0m0.021s
+sys     0m0.006s
+$ time echo ad0a729c7270620be3ef379ed48da9ed7ed56762af6e24e0983a0a5882ab0d5e6bd25dbe900b1fcfc5be19c467eeedc76e434595c852cd642c3fbd8b20ee2a11deb2378ed40714d35b16fcb1322aa2f0f435192f2831a250ee4674ea739d6064 | nc localhost 9849
+No match for signature.
+real    0m0.034s
+user    0m0.022s
+sys     0m0.003s
+$
+```
+
 TODO: make a desktop GUI client, exapand error handling, include example docker files, add curves 384 and 512 daemons, front-end client for HTTPS transport.
