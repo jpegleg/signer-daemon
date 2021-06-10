@@ -31,8 +31,7 @@ app.setup_security()
 def dsatn(message_in):
     r = redis.StrictRedis(host='localhost', port=6379, db=0)
     f = open('secp384r1.pem','r')
-    private_key = ECC.import_key(f.read())
-    keyPair = private_key
+    keyPair = ECC.import_key(f.read())
     hash = SHA384.new(message_in)
     signer = DSS.new(keyPair, 'fips-186-3')
     signature = signer.sign(hash)
