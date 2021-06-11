@@ -84,4 +84,27 @@ sys     0m0.003s
 $
 ```
 
-TODO: make a desktop GUI client, exapand error handling, include example docker files, add curves 384 and 512 daemons, front-end client for HTTPS transport.
+You can hold a surprising amount of data in RAM, and redis keeps up with the ops very well.
+
+Using the ecdsa socket daemons locally, the default 4 celery workers on the signing daemon are doing 37 TPS easily, and could likely handle several times that rate of requests.
+
+Note the important difference here between the DSS and PSS verification outputs (don't chanage these unless you know what you are doing):
+
+ECDSA DSS
+```
+      validate = signer.verify(hash, signature)
+      return('Valid entry found.')
+```
+
+RSA+OAEP PSS
+```
+      validate = signer.verify(hash, signature)
+      return('Validated as:', validate)
+```
+
+You will see the PSS (RSA) verify will return True for a valid signature, and False for a signature that is not signed by the private key. If the input is not a key, then it won't return there. And the correct signature+data entry must be in redis to allow True, as well.
+
+With the DSS (ECDSA) verify, we see a False return on valid sign, and an error return for any not sign correctly, and empty response if not a valid key.
+
+I like the DSS behavior better, other than how the bool is flipped to a False for some reason.
+
