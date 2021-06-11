@@ -1,6 +1,18 @@
 # signer-daemon collection
 Signing daemon collection with redis backend.
 
+These daemons do not provide any privacy as is, they simply provide signing and redis-based verification and storage.
+Redis will need to be installed separately. The scripts can be safely edited to change the redis location as needed, and TLS "rediss" is supported as is.
+The TCP socket servers provided are raw TCP, no security on that socket, that part is up to you.
+Also by default, the secret keys for signing are plaintext files on the filesystem. Protect the disk, and/or be smart about
+who can access any files used.
+
+The files in the files/ directory are used for identity of the celery daemon itself, not for redis, and not for the tcp socket server.
+The rsa.pem and secp384r1.pem respectively are to be created in the working directory of the daemon/server. Those are used for signing.
+I recommend keeping that as a different key than the identity key used in files/. 
+
+You will need to generate the required cryptographic components, see the celery daemon scripts.
+
 For the RSA daemons, OAEP PSS is implemented to mitigate oracle/padding attacks on RSA (Bleichenbacher).
 
 If the data is to be secret/private, then is should be encrypted with (AES256) before being signed by this identity daemon.
