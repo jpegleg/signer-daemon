@@ -13,6 +13,7 @@ So if you delete or expire the signature in redis, you expire that signature in 
 then it will become valid again.
 
 The max message length is defaulted to 2048 bytes. Adjust it if needed, in many implementations it may be safely increased.
+Otherwise, larger messages will be chunked and treated as independent messages to sign.
 
 What is included in this repo is a collection of concepts that would be 
 further expanded on or combined with other applications when used in the real world.
