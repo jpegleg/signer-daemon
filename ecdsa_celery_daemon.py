@@ -1,15 +1,11 @@
 import base64
 import redis
 import binascii
-from typing import Tuple, TypeVar
 from base64 import b64encode, b64decode
 from celery import Celery
 from Crypto.PublicKey import ECC
 from Crypto.Signature import DSS
 from Crypto.Hash import SHA384
-
-MsgTypes = TypeVar('MsgTypes', str, bytes, bytearray)
-SigType = Tuple[int, int]
 
 app = Celery(
     'celeryDsa',
