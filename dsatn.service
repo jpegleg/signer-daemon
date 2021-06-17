@@ -6,7 +6,7 @@ Wants=dsatn.service
 
 [Service]
 Type=simple
-ExecStart=/usr/local/sbin/dsa_server
+ExecStart=/usr/local/sbin/dss_server
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 PrivateTmp=true
