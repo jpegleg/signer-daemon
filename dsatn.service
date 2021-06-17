@@ -1,0 +1,15 @@
+[Unit]
+Description=ECDSA DSS signing celery daemon socket server
+Documentation=https://github.com/jpegleg/signer-daemom
+After=network.target
+Wants=dsatn.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/dsa_server
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
