@@ -101,7 +101,7 @@ You can hold a surprising amount of data in RAM, and redis keeps up with the ops
 
 Using the ecdsa socket daemons locally, the default 4 celery workers on the signing daemon are doing 37 TPS easily, and could likely handle several times that rate of requests.
 
-Note the important difference here between the DSS and PSS verification outputs (don't chanage these unless you know what you are doing):
+Note the important difference here between the DSS and PSS verification outputs (don't change these unless you know what you are doing):
 
 ECDSA DSS
 ```
