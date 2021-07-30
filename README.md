@@ -17,6 +17,11 @@ For the RSA daemons, OAEP PSS is implemented to mitigate oracle/padding attacks 
 
 If the data is to be secret/private, then is should be encrypted with (AES256) before being signed by this identity daemon.
 
+Static analysis note:
+There is a false positive for Crypto being seen as the old pycrypto, when in this case it is using the pycryptdome.
+This is caused by the old Crypto api syntax, but it is actually with pycryptdome, which continued what pycrypto started.
+https://pycryptodome.readthedocs.io/en/latest/src/vs_pycrypto.html
+
 Important design note:
 Both ECDSA and RSA verify daemons will not return a valid result if the signature is not stored appropriately it the redis instance.
 This allows for expiration and granular controls over which keys are valid via redis. 
@@ -37,7 +42,7 @@ Example of setting up a single host for both sign and verify servers:
 
 ```
 # We'll put the celery daemon's rsa files in files/
-mkdir files/
+Gmkdir files/
 # Crate an RSA key, get it signed, put the certificate in
 # files/celeryRsa.pem
 # and the rsa private key in
