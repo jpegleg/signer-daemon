@@ -1,7 +1,6 @@
-import base64
 import redis
 import binascii
-from base64 import b64encode, b64decode
+
 from celery import Celery
 from Crypto.PublicKey import ECC
 from Crypto.Signature import DSS
