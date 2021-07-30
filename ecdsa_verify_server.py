@@ -1,8 +1,5 @@
 import socketserver
-import socket
-import celery
 
-from base64 import b64encode, b64decode
 from ecdsa_celery_daemon import dsavf
 
 class handle_tcp(socketserver.BaseRequestHandler):
