@@ -1,13 +1,12 @@
-import rsa
-import os
-import base64
+# This is a reference file/template for editing for another use case.
+# Do not try to use this file as is.
+
 import redis
 import binascii
-from base64 import b64encode, b64decode
+
 from celery import Celery
 from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA256
-from Crypto import Random
 from Crypto.Signature import PKCS1_PSS
 
 app = Celery(
