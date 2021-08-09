@@ -8,6 +8,10 @@ class handle_tcp(socketserver.BaseRequestHandler):
         print("{} sent:".format(self.client_address[0]))
         print(self.data)
         results = str(dsavf(self.data))
+        # Example implementing some functionality upon successful validation
+        #validated = ;Valid entry found.'
+        #if results == validated:
+        #    do something
         self.request.sendall(results.encode())
 
 if __name__ == "__main__":
