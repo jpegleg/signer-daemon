@@ -47,10 +47,10 @@ def dsavf(message_in):
     print("Verification of data:", message)
     try:
         validate = signer.verify(hashd, signature)
-        return('Valid entry found.')
+        return 'Valid entry found.'
     except Exception as error:
         print('ERROR: ', error)
-        return('No match for signature.')
+        return 'No match for signature.'
 
 if __name__ == '__main__':
     app.start()
