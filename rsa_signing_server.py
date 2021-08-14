@@ -4,6 +4,7 @@ from rsa_celery_daemon import rsatn
 
 class handle_tcp(socketserver.BaseRequestHandler):
     def handle(self):
+        """ listen for TCP connections and read 2048 bytes """
         self.data = self.request.recv(2048).strip()
         print("{} sent:".format(self.client_address[0]))
         print(self.data)
