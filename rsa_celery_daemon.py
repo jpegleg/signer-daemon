@@ -46,11 +46,11 @@ def rsavf(message_in):
     signature = binascii.unhexlify(message_in)
     print("Verification of data:",  message)
     try:
-      validate = signer.verify(hashd, signature)
-      return 'Validated as:', validate
+        validate = signer.verify(hashd, signature)
+        return 'Validated as:', validate
     except Exception as error:
-      print('ERROR: ', error)
-      return 'No match for signature.'
+        print('ERROR: ', error)
+        return 'No match for signature.'
 
 if __name__ == '__main__':
     app.start()
