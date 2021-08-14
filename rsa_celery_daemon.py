@@ -1,4 +1,5 @@
-import binascii
+""" rsa cryptodome sign and verify with redis storage """
+mport binascii
 import redis
 
 from celery import Celery
@@ -27,9 +28,9 @@ def rsatn(message_in):
     """ rsa sign and store in redis """
     re_dis = redis.StrictRedis(host='localhost', port=6379, db=0)
     f_key = open('rsa.pem', 'r')
-    keyPair = RSA.import_key(f_key.read())
+    key_pair = RSA.import_key(f_key.read())
     hashd = SHA256.new(message_in)
-    signer = PKCS1_PSS.new(keyPair)
+    signer = PKCS1_PSS.new(key_pair)
     signature = signer.sign(hashd)
     re_dis.mset({binascii.hexlify(signature): message_in})
     print("Signature:", binascii.hexlify(signature))
@@ -38,10 +39,10 @@ def rsavf(message_in):
     """ rsa verify """
     re_dis = redis.StrictRedis(host='localhost', port=6379, db=0)
     f_key = open('rsa.pem', 'r')
-    keyPair = RSA.import_key(f_key.read())
+    key_pair = RSA.import_key(f_key.read())
     message = re_dis.get(message_in)
     hashd = SHA256.new(message)
-    signer = PKCS1_PSS.new(keyPair)
+    signer = PKCS1_PSS.new(key_pair)
     signature = binascii.unhexlify(message_in)
     print("Verification of data:",  message)
     try:
