@@ -22,7 +22,7 @@ app.conf.update(
 )
 app.setup_security()
 
-@APP.task
+@app.task
 def dsatn(message_in):
     """ dsa signature create and insert into redis """
     re_dis = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -52,4 +52,4 @@ def dsavf(message_in):
         return('No match for signature.')
 
 if __name__ == '__main__':
-    APP.start()
+    app.start()
