@@ -1,5 +1,5 @@
-import redis
 import binascii
+import redis
 
 from celery import Celery
 from Crypto.PublicKey import RSA
@@ -24,30 +24,32 @@ app.setup_security()
 
 @app.task
 def rsatn(message_in):
-    r = redis.StrictRedis(host='localhost', port=6379, db=0)
-    f = open('rsa.pem','r')
-    keyPair = RSA.import_key(f.read())
-    hash = SHA256.new(message_in)
+    """ rsa sign and store in redis """
+    re_dis = redis.StrictRedis(host='localhost', port=6379, db=0)
+    f_key = open('rsa.pem', 'r')
+    keyPair = RSA.import_key(f_key.read())
+    hashd = SHA256.new(message_in)
     signer = PKCS1_PSS.new(keyPair)
-    signature = signer.sign(hash)
-    r.mset({binascii.hexlify(signature): message_in})
+    signature = signer.sign(hashd)
+    re_dis.mset({binascii.hexlify(signature): message_in})
     print("Signature:", binascii.hexlify(signature))
     return(message_in, binascii.hexlify(signature))
 def rsavf(message_in):
-    r = redis.StrictRedis(host='localhost', port=6379, db=0)
-    f = open('rsa.pem','r')
-    keyPair = RSA.import_key(f.read())
-    message = r.get(message_in)
-    hash = SHA256.new(message)
+    """ rsa verify """
+    re_dis = redis.StrictRedis(host='localhost', port=6379, db=0)
+    f_key = open('rsa.pem', 'r')
+    keyPair = RSA.import_key(f_key.read())
+    message = re_dis.get(message_in)
+    hashd = SHA256.new(message)
     signer = PKCS1_PSS.new(keyPair)
     signature = binascii.unhexlify(message_in)
     print("Verification of data:",  message)
     try:
-      validate = signer.verify(hash, signature)
-      return('Validated as:', validate)
+      validate = signer.verify(hashd, signature)
+      return 'Validated as:', validate
     except Exception as error:
       print('ERROR: ', error)
-      return('No match for signature.')
+      return 'No match for signature.'
 
 if __name__ == '__main__':
     app.start()
