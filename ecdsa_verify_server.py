@@ -4,6 +4,7 @@ from ecdsa_celery_daemon import dsavf
 
 class handle_tcp(socketserver.BaseRequestHandler):
     def handle(self):
+        """ listen for TCP connections and read 2048 bytes at a time """
         self.data = self.request.recv(2048).strip()
         print("{} sent:".format(self.client_address[0]))
         print(self.data)
