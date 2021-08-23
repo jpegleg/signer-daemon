@@ -13,7 +13,7 @@ I recommend keeping that as a different key than the identity key used in files/
 
 You will need to generate the required cryptographic components, see the celery daemon scripts.
 
-For the RSA daemons, OAEP PSS is implemented to mitigate oracle/padding attacks on RSA (Bleichenbacher).
+For the RSA daemons, PSS is implemented to mitigate oracle/padding attacks on RSA (Bleichenbacher).
 
 If the data is to be secret/private, then is should be encrypted with (AES256) before being signed by this identity daemon.
 
@@ -114,7 +114,7 @@ ECDSA DSS
       return('Valid entry found.')
 ```
 
-RSA+OAEP PSS
+RSA PSS
 ```
       validate = signer.verify(hash, signature)
       return('Validated as:', validate)
