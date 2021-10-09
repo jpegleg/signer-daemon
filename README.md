@@ -16,6 +16,7 @@ You will need to generate the required cryptographic components, see the celery 
 For the RSA daemons, PSS is implemented to mitigate oracle/padding attacks on RSA (Bleichenbacher).
 
 If the data is to be secret/private, then is should be encrypted with (AES256) before being signed by this identity daemon.
+Checkout https://github.com/jpegleg/salsa_falcon for encryption, that template uses salsa20 encryption.
 
 Static analysis note:
 There is a false positive for Crypto being seen as the old pycrypto, when in this case it is using the pycryptdome.
